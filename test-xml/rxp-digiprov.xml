@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<premis xmlns="info:lc/xmlns/premis-v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd">
+  <object xsi:type="representation">
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>info:nyu-dl/x-v1/pr/TEST-mw6m90b</objectIdentifierValue>
+    </objectIdentifier>
+  </object>
+  <object xsi:type="representation">
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>info:fcla/daitss/E20060914_AAAACF</objectIdentifierValue>
+    </objectIdentifier>
+  </object>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>URI</eventIdentifierType>
+      <eventIdentifierValue>info:nyu-dl/x-v1/pr/TEST-mw6m90b/event/2009-11-07T12:12:39</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>dissemination</eventType>
+    <eventDateTime>2009-11-07T12:12:39</eventDateTime>
+    <eventDetail>Disseminated RXP package</eventDetail>
+    <eventOutcomeInformation>
+      <eventOutcome>SUCCESS</eventOutcome>
+      <eventOutcomeDetail>
+        <eventOutcomeDetailNote/>
+      </eventOutcomeDetail>
+    </eventOutcomeInformation>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>URI</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>info:nyu-dl/x-v1/pr/agent/pr-dspace-test-instance</linkingAgentIdentifierValue>
+    </linkingAgentIdentifier>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>info:nyu-dl/x-v1/pr/TEST-mw6m90b</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>URI</eventIdentifierType>
+      <eventIdentifierValue>info:fcla/daitss/E20060914_AAAACF/event/32158606</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>dissemination</eventType>
+    <eventDateTime>2009-05-15T14:57:41-05:00</eventDateTime>
+    <eventDetail>Disseminated TIPR package</eventDetail>
+    <eventOutcomeInformation>
+      <eventOutcome>SUCCESS</eventOutcome>
+      <eventOutcomeDetail>
+        <eventOutcomeDetailNote/>
+      </eventOutcomeDetail>
+    </eventOutcomeInformation>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>URI</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>info:fcla/daitss/agent/FDA</linkingAgentIdentifierValue>
+    </linkingAgentIdentifier>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>info:fcla/daitss/E20060914_AAAACF</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <agent>
+    <agentIdentifier>
+      <agentIdentifierType>URI</agentIdentifierType>
+      <agentIdentifierValue>info:nyu-dl/x-v1/pr/agent/pr-dspace-test-instance</agentIdentifierValue>
+    </agentIdentifier>
+    <agentName>pr</agentName>
+    <agentType>software</agentType>
+  </agent>
+  <agent>
+    <agentIdentifier>
+      <agentIdentifierType>URI</agentIdentifierType>
+      <agentIdentifierValue>info:fcla/daitss/agent/FDA</agentIdentifierValue>
+    </agentIdentifier>
+    <agentName>FDA</agentName>
+    <agentType>organization</agentType>
+  </agent>
+</premis>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets xmlns="http://www.loc.gov/METS/" 
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      OBJID="info:nyu-dl/x-v1/pr/TEST-mw6m90b" 
+      LABEL="ETD">
+
+  <metsHdr CREATEDATE="2009-11-07T12:12:39">
+    <agent ROLE="DISSEMINATOR" TYPE="ORGANIZATION">
+      <name>NYU-DL</name>
+      <note>rxp-1.0.0</note>
+    </agent>
+  </metsHdr>
+
+  <amdSec>
+    <rightsMD ID="rights-metadata-0">
+      <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:href="rxp-rights.xml"/>
+    </rightsMD>
+    <digiprovMD ID="digiprov-metadata-0">
+      <mdRef LOCTYPE="URL" MDTYPE="PREMIS" xlink:href="rxp-digiprov.xml"/>
+    </digiprovMD>
+  </amdSec>
+
+  <fileSec>
+    <fileGrp>
+      <file ID="file-0" CHECKSUM="7d3c362c8930020ad00c2d75d0c9e901e4adc1b5" CHECKSUMTYPE="SHA-1">
+        <FLocat LOCTYPE="URL" xlink:href="rxp-rep-1.xml"/>
+      </file>
+    </fileGrp>
+    <fileGrp USE='METADATA'>
+      <file ID="RXP-RMD" CHECKSUM="da39a3ee5e6b4b0d3255bfef95601890afd80709" CHECKSUMTYPE="SHA-1">
+        <FLocat LOCTYPE="URL" xlink:href="rxp-rights.xml"/>
+      </file>
+      <file ID="RXP-DPMD" CHECKSUM="52c837ac4873edabdec7fcc637bbdf1924b53016" CHECKSUMTYPE="SHA-1">
+        <FLocat LOCTYPE="URL" xlink:href="rxp-digiprov.xml"/>
+      </file>
+    </fileGrp>
+  </fileSec>
+
+  <structMap>
+    <div>
+      <div TYPE="ACTIVE" ORDER="1">
+        <fptr FILEID="file-0"/>
+      </div>
+    </div>
+  </structMap>
+
+</mets>
