@@ -9,27 +9,32 @@
   <ns prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" />
 
   <pattern>
-
     <title>PREMIS Elements Required by RXP</title>
-
     <rule context="premis:premis">
       <assert test="premis:object[@xsi:type='file' or @xsi:type='bitstream']">
-        There must one at least one file or bitstream object
+        MUST one at least one file or bitstream object
       </assert>
       <assert test="premis:object[@xsi:type='representation']">
-        There must one representation object
+        MUST one representation object
       </assert>
       <report test="not(premis:agent)">
-        There should be at least one agent
+        SHOULD be at least one agent
       </report>
     </rule>
+  </pattern>
 
+  <pattern>
+    <title>PREMIS identifier types</title>
     <rule context="//premis:objectIdentifierType | //premis:eventIdentifierType | //premis:agentIdentifierType">
       <assert test=". = 'URI'">
         PREMIS identifier types MUST be "URI"
       </assert>
     </rule>
 
+  </pattern>
+
+  <pattern>
+    <title>events</title>
     <rule context="//premis:event">
       <assert test=".//premis:linkingObjectIdentifierValue = //premis:objectIdentifierValue">
         MUST link to related objects

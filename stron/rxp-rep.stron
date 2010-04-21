@@ -8,32 +8,35 @@
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink" />
 
   <pattern>
-    <title>METS Elements Required by RXP</title>
-
+    <title>amdSec</title>
     <rule context = "mets:mets">
       <assert test="mets:amdSec/mets:digiprovMD/mets:mdRef">
-        must have a digiprovMD with an mdRef
+        MUST have a digiprovMD with an mdRef
       </assert>
     </rule>
-
     <rule context="mets:amdSec/mets:digiprovMD/mets:mdRef">
       <assert test="substring-before( substring-after(@xlink:href, 'rxp-rep-'), '-digiprov.xml') >= 0">
-        mdRef must reference 'rxp-rep-n-digiprov.xml' where n is a number
+        MUST reference 'rxp-rep-n-digiprov.xml' where n is a number
       </assert>
     </rule>
+  </pattern>
 
+  <pattern>
+    <title>FLocats in the fileSec</title>
+    <rule context = "//mets:fileGrp[not(@USE='METADATA')]//mets:file/metsLFLocat">
+      <assert test="starts-with(@xlink:href, 'files/')">
+        SHALL reference files in the "files/" directory
+      </assert>
+    </rule>
+  </pattern>
+
+  <pattern>
+    <title>file not in the metadata file group</title>
     <rule context = "//mets:fileGrp[not(@USE='METADATA')]//mets:file">
-
-      <assert test="starts-with(mets:FLocat/@xlink:href, 'files/')">
-        shall reference files in the "files/" directory
-      </assert>
-
       <report test="not(@OWNERID)">
-        each file not in the metadata file group SHOULD have an OWNERID attribute.
+        SHOULD have an OWNERID attribute
       </report>
-
     </rule>
-
   </pattern>
 
 </schema>

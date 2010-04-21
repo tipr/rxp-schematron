@@ -4,57 +4,44 @@
         queryBinding='xslt' schemaVersion='ISO19757-3'>
 
   <title>RXP Digital Provenance (rxp-digiprov.xml) schematron</title>
-
-  <!-- rxp-digiprov.xml should always follow the PREMIS 2.0 schema.
-       Additional requirements are outlined by this schematron.
-    -->
-
   <ns prefix="premis" uri="info:lc/xmlns/premis-v2" />
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink" />
   <ns prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" />
 
   <pattern>
     <title>PREMIS Elements Required for RXP Digital Provenance</title>
-
     <rule context="premis:premis">
       <assert test="premis:object[@xsi:type='representation']">
-        There must be at least one representation object for the RXP package
+        MUST be at least one representation object which describes the RXP
       </assert>
       <assert test="premis:agent">
-        There must be at least one agent which corresponds to the RXP creator
+        MUST be at least one agent to describe the sender
       </assert>
       <assert test="premis:event[premis:eventType = 'dissemination']">
-        There must be at least one event
+        MUST be at least one dissemination event to describe the initial creation of the RXP
       </assert>
     </rule>
+  </pattern>
 
-    <!-- representations -->
-    <rule context="premis:object[@xsi:type='representation']">
-      <assert test="premis:objectIdentifier/premis:objectIdentifierType = 'URI'">
-        Object identifier type must be URI
-      </assert>
-    </rule>
-
-    <!-- agents -->
-    <rule context="premis:agent">
-      <assert test="premis:agentIdentifier/premis:agentIdentifierType = 'URI'">
-        Agent identifier type must be URI.
-      </assert>
-    </rule>
-
-    <!-- events -->
+  <pattern>
+    <title>dissemination events</title>
     <rule context="premis:event[premis:eventType = 'dissemination']">
-      <assert test="premis:eventIdentifier/premis:eventIdentifierType = 'URI'">
-        event identifier type must be URI
-      </assert>
       <assert test=".//premis:linkingObjectIdentifierValue = //premis:object[@xsi:type = 'representation']/premis:objectIdentifier/premis:objectIdentifierValue">
-        event must link to representation
+        MUST link to the associated agent
       </assert>
       <assert test=".//premis:linkingAgentIdentifierValue = //premis:agentIdentifierValue">
-        event must link to agent
+        MUST link to the representation object
       </assert>
     </rule>
+  </pattern>
 
+  <pattern>
+    <title>PREMIS identifier types</title>
+    <rule context="//premis:objectIdentifierType | //premis:agentIdentifierType | //premis:eventIdentifierType">
+      <assert test=". = 'URI'">
+        MUST be URI
+      </assert>
+    </rule>
   </pattern>
 
 </schema>
