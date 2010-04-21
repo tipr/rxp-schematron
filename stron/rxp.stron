@@ -3,185 +3,71 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         queryBinding='xslt' schemaVersion='ISO19757-3'>
 
-  <title>Repository eXchange Package Envelope (rxp.xml) schematron</title>
+  <title>rxp.xml</title>
   <ns prefix="mets" uri="http://www.loc.gov/METS/" />
   <ns prefix="xlink" uri="http://www.w3.org/1999/xlink" />
 
-  <pattern>
-
-    <title>METS elements required by the RXP</title>
-
-    <rule context = "/mets:mets">
-      <assert test="@OBJID">
-        There must be an OBJID (the RXP creator's package identifier)
-      </assert>
-      <assert test="count(mets:metsHdr)=1">
-        There must be one METS Header
-      </assert>
-      <assert test="count(mets:amdSec)=1">
-        There must be one amdSec
-      </assert>
-      <assert test="not(mets:dmdSec)">
-        There must not be a dmdSec
-      </assert>
-      <assert test="count(mets:fileSec)=1">
-        There must be one fileSec
-      </assert>
-      <assert test="count(mets:structMap)=1">
-        There must be one structMap
-      </assert>
-    </rule>
-  </pattern>
 
   <pattern>
-
-    <title>METS header content and attributes</title>
-
-    <rule context="/mets:mets/mets:metsHdr">
-      <report test="not(@CREATEDATE)">
-        The METS header should have a CREATEDATE
-      </report>
-      <assert test="mets:agent">
-        The METS header must have one agent
-      </assert>
-    </rule>
-
-    <rule context="/mets:mets/mets:metsHdr/mets:agent">
-      <assert test="@ROLE='DISSEMINATOR'">
-        The agent role must be DISSEMINATOR
-      </assert>
-      <assert test="@TYPE='ORGANIZATION'">
-        The agent type must be ORGANIZATION
-      </assert>
-      <assert test="mets:name">
-        The agent must have a name
-      </assert>
-      <assert test="mets:note = 'rxp-1.0.0'">
-        The agent must have a note with value of "rxp-1.0.0", actual value is "<value-of select="mets:note"/>"
-      </assert>
-    </rule>
-
-  </pattern>
-
-  <pattern>
-
-    <title>The amdSec content</title>
-
+    <title>amdSec</title>
     <rule context="/mets:mets/mets:amdSec">
       <report test="not(mets:rightsMD)">
-        There should be a rightsMD section
+        SHOULD have a rightsMD section
       </report>
       <assert test="mets:digiprovMD">
-        There must be a digiprovMD section
+        MUST have a digiprovMD section
       </assert>
     </rule>
+  </pattern>
 
+  <pattern>
+    <title>rightsMD</title>
     <rule context="/mets:mets/mets:amdSec/mets:rightsMD">
-      <assert test="mets:mdRef/@LOCTYPE = 'URL'">
-        The rights section must have an mdRef with LOCTYPE URL
+      <assert test="mets:mdRef/@xlink:href = 'rxp-rights.xml'">
+        MUST have an mdRef that references rxp-rights.xml
       </assert>
-      <assert test="mets:mdRef/@MDTYPE = 'PREMIS'">
-        The rights section must have an mdRef with MDTYPE PREMIS
-      </assert>
-      <!--<assert test="mets:mdRef/@xlink:href = 'rxp-rights.xml'">-->
-        <!--The rights section must have an mdRef that references rxp-rights.xml-->
-      <!--</assert>-->
     </rule>
+  </pattern>
 
+  <pattern>
+    <title>digiprovMD</title>
     <rule context="/mets:mets/mets:amdSec/mets:digiprovMD">
-      <assert test="mets:mdRef/@LOCTYPE = 'URL'">
-        The rights section must have an mdRef with LOCTYPE URL
+       <assert test="mets:mdRef/@xlink:href = 'rxp-digiprov.xml'">
+        MUST have an mdRef that references rxp-digiprov.xml
       </assert>
-      <assert test="mets:mdRef/@MDTYPE = 'PREMIS'">
-        The rights section must have an mdRef with MDTYPE PREMIS
-      </assert>
-      <!--<assert test="mets:mdRef/@xlink:href = 'rxp-digiprov.xml'">-->
-        <!--The digiprov section must have an mdRef that references rxp-digiprov.xml-->
-      <!--</assert>-->
     </rule>
-
   </pattern>
 
   <pattern>
-    <title>The fileSec content</title>
-
-    <rule context="/mets:mets/mets:fileSec">
-      <assert test="count(mets:fileGrp)=2">
-        There must be two file groups
-      </assert>
-      <assert test="mets:fileGrp[@USE='METADATA']">
-        There must be one metadata file group
-      </assert>
-      <assert test="mets:fileGrp[not(@USE='METADATA')]">
-        There must be one non-metadata file group
-      </assert>
-    </rule>
-
-    <rule context="/mets:mets/mets:fileSec/mets:fileGrp[@USE='METADATA']/mets:file">
-      <assert test="mets:FLocat/@xlink:href = /mets:mets/mets:amdSec//mets:mdRef/@xlink:href">
-        file with ID <value-of select="@ID"/> must be referenced in the amdSec
-      </assert>
-    </rule>
-
-    <rule context="/mets:mets/mets:fileSec/mets:fileGrp[not(@USE='METADATA')]/mets:file">
-      <assert test="@ID = //mets:structMap//mets:fptr/@FILEID">
-        file with ID <value-of select="mets:file/@ID"/> must be referenced in the structMap
-      </assert>
-    </rule>
-
+    <title>FLocats in the fileSec</title>
     <rule context="//mets:file/mets:FLocat">
+      <assert test="not(contains(@xlink:href, '/'))">
+        MUST reference only metadata files at the TIPR level
+      </assert>
       <assert test="not(starts-with(@xlink:href, 'files/'))">
-        must not reference files in the "files" directory
+        MUST NOT reference files within the files/ directory
       </assert>
     </rule>
-
   </pattern>
 
   <pattern>
-    <title>mets files</title>
-
-    <rule context="//mets:file">
-      <assert test="@CHECKSUM">
-        files must have a checksum
-      </assert>
-      <assert test="@CHECKSUMTYPE = 'SHA-1'">
-        invalid checksum type <value-of select="@CHECKSUMTYPE"/>, must be SHA-1
-      </assert>
-    </rule>
-
-  </pattern>
-
-  <pattern>
-    <title>The structMap Content</title>
-
+    <title>inner div in the structMap</title>
     <rule context="/mets:mets/mets:structMap/mets:div">
       <assert test="mets:div">
-        The struct map must have an inner div
+        MUST have an inner div
       </assert>
       <assert test="count(mets:div[@TYPE='ACTIVE'])=1">
-        There must be only one active representation (TYPE='ACTIVE')
+        MUST be only one active representation (TYPE='ACTIVE')
       </assert>
     </rule>
-
     <rule context="/mets:mets/mets:structMap/mets:div/mets:div">
-      <report test="not(@ORDER)">
-        all inner divs must have an order
-      </report>
-      <report test="@ORDER = following-sibling::*/@ORDER">
-        inner div orders should be distinct
+      <report test="@ORDER and (@ORDER = following-sibling::*/@ORDER)">
+        SHOULD have a distinct ORDER attribute
       </report>
       <report test="not(@ORDER >= 1)">
         inner div orders must be greater than or equal to 1
       </report>
     </rule>
-
-    <rule context="/mets:mets/mets:structMap/mets:div//mets:fptr">
-      <assert test="@FILEID = //mets:file/@ID">
-        files referenced in the structMap must exist in the fileSec
-      </assert>
-    </rule>
-
   </pattern>
-
 
 </schema>
