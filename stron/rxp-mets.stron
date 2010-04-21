@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron"
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        queryBinding='xslt' schemaVersion='ISO19757-3'>
+
+  <title>Repository eXchange Package Envelope (rxp.xml) schematron</title>
+  <ns prefix="mets" uri="http://www.loc.gov/METS/" />
+  <ns prefix="xlink" uri="http://www.w3.org/1999/xlink" />
+
+  <pattern>
+    <title>general rules for all METS files</title>
+
+    <rule context="/mets:mets/mets:amdSec/mets:*">
+      <assert test="mets:mdRef and not(mets:mdWrap)">
+        MUST refer to metadata by mdRef and NOT by mdWrap
+      </assert>
+    </rule>
+
+    <rule context="//mets:mdRef | //mets:FLocat">
+      <assert test="not(starts-with(@xlink:href, '/'))">
+        MUST be relative path to local file
+      </assert>
+    </rule>
+
+    <rule context="/mets:mets/mets:structMap/mets:div//mets:fptr">
+      <assert test="@FILEID = //mets:file/@ID">
+        MUST exist in the fileSec
+      </assert>
+    </rule>
+
+  </pattern>
+
+  <pattern>
+    <title>mets</title>
+
+    <rule context = "/mets:mets">
+      <assert test="@OBJID">
+        MUST be an OBJID
+      </assert>
+      <assert test="count(mets:metsHdr)=1">
+        MUST be one METS Header
+      </assert>
+      <assert test="count(mets:amdSec)=1">
+        MUST be one amdSec
+      </assert>
+      <assert test="count(mets:fileSec)=1">
+        MUST be one fileSec
+      </assert>
+      <assert test="count(mets:structMap)=1">
+        MUST be one structMap
+      </assert>
+      <assert test="not(mets:dmdSec)">
+        MUST not be a dmdSec
+      </assert>
+    </rule>
+  </pattern>
+
+  <pattern>
+    <title>metsHdr</title>
+
+    <rule context="/mets:mets/mets:metsHdr">
+      <report test="not(@CREATEDATE)">
+        SHOULD have CREATEDATE attribute
+      </report>
+      <assert test="mets:agent">
+        MUST have one agent
+      </assert>
+    </rule>
+
+    <rule context="/mets:mets/mets:metsHdr/mets:agent">
+      <assert test="@ROLE='DISSEMINATOR'">
+        ROLE attribute MUST be DISSEMINATOR
+      </assert>
+      <assert test="@TYPE='ORGANIZATION'">
+        TYPE attribute MUST be ORGANIZATION
+      </assert>
+      <assert test="mets:name">
+        MUST have a name
+      </assert>
+      <assert test="mets:note = 'rxp-1.0.0'">
+        MUST have a note with value of "rxp-1.0.0"
+      </assert>
+    </rule>
+
+  </pattern>
+
+  <pattern>
+    <title>fileSec</title>
+
+    <rule context="/mets:mets/mets:fileSec">
+      <assert test="count(mets:fileGrp)=2">
+        MUST be two file groups
+      </assert>
+      <assert test="mets:fileGrp[@USE='METADATA']">
+        MUST be one metadata file group
+      </assert>
+      <assert test="mets:fileGrp[not(@USE='METADATA')]">
+        MUST be one non-metadata file group
+      </assert>
+    </rule>
+
+    <rule context="/mets:mets/mets:fileSec/mets:fileGrp[@USE='METADATA']//mets:file">
+      <assert test="mets:FLocat/@xlink:href = /mets:mets/mets:amdSec//mets:mdRef/@xlink:href">
+        metadata file MUST be referenced in the amdSec
+      </assert>
+    </rule>
+
+    <rule context="/mets:mets/mets:fileSec/mets:fileGrp[not(@USE='METADATA')]//mets:file">
+      <assert test="@ID = //mets:structMap//mets:fptr/@FILEID">
+        non-metadata file is MUST be referenced in the structMap
+      </assert>
+    </rule>
+
+    <rule context="//mets:file">
+      <assert test="not(starts-with(mets:FLocat/@xlink:href, '/'))">
+        FLocat MUST be relative paths to local files
+      </assert>
+      <assert test="@CHECKSUM">
+        MUST have CHECKSUM attribute
+      </assert>
+      <assert test="@CHECKSUMTYPE = 'SHA-1'">
+        MUST have CHECKSUMTYPE attribute be SHA-1
+      </assert>
+    </rule>
+
+  </pattern>
+
+</schema>
