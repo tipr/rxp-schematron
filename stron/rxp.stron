@@ -56,8 +56,8 @@
       <assert test="mets:div">
         MUST have an inner div
       </assert>
-      <assert test="count(mets:div[@TYPE='ACTIVE'])=1">
-        MUST be only one active representation (TYPE='ACTIVE')
+      <assert test="count(mets:div[@LABEL='ACTIVE'])=1">
+        MUST be only one active representation (LABEL='ACTIVE')
       </assert>
     </rule>
     <rule context="/mets:mets/mets:structMap/mets:div/mets:div">
