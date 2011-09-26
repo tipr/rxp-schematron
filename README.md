@@ -1,6 +1,6 @@
 # TIPR RXP Schematron
 
-Schematron implementation of [RXP Specification](http://wiki.fcla.edu:8000/TIPR/21)
+Schematron implementation of [RXP Specification](http://wiki.fcla.edu:8000/TIPR/63)
 
 ## Schematron files (in stron dir)
 
